@@ -1,19 +1,12 @@
 [workspace]
-members = ["plotters-piet"]
+members = ["plotters-masonry", "plotters-vello", "plotters-xilem"]
 
-[package]
-name = "plotters-druid"
-version = "0.3.0"
-edition = "2021"
-authors = ["Pascal Sommer"]
-license = "MIT OR Apache-2.0"
-description = "Use Plotters as a Druid Widget"
-repository = "https://github.com/Pascal-So/plotters-druid"
-keywords = ["visualization", "plotters", "druid", "plot", "widget"]
-categories = ["visualization", "gui"]
-readme = "Readme.md"
-
-[dependencies]
-druid = "0.8.2"
-plotters-piet = {version = "0.3.2", path = "plotters-piet"}
+[workspace.dependencies]
+masonry = "0.3.0"
+masonry_winit = "0.3.0"
 plotters = "^0.3"
+plotters-backend = "^0.3"
+plotters-masonry = { version = "0.3.0", path = "plotters-masonry" }
+plotters-vello = { version = "0.3.0", path = "plotters-vello" }
+vello = { version = "0.5.0", default-features = false }
+xilem = "0.3.0"

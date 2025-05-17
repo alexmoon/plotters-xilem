@@ -1,0 +1,23 @@
+[package]
+name = "plotters-masonry"
+version = "0.3.0"
+edition = "2024"
+authors = ["Alex Moon", "Pascal Sommer"]
+license = "MIT OR Apache-2.0"
+description = "Use Plotters as a Masonry Widget"
+repository = "https://github.com/alexmoon/plotters-xilem"
+keywords = ["visualization", "plotters", "masonry", "plot", "widget"]
+categories = ["visualization", "gui"]
+readme = "README.md"
+
+[dependencies]
+accesskit = "0.19.0"
+masonry = { workspace = true }
+plotters = { workspace = true }
+plotters-backend = { workspace = true }
+plotters-vello = { workspace = true }
+smallvec = "1.15.0"
+
+[dev-dependencies]
+masonry_winit = { workspace = true }
+winit = "0.30.10"

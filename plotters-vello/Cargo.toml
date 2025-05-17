@@ -1,0 +1,25 @@
+[package]
+name = "plotters-vello"
+edition = "2024"
+authors = ["Alex Moon", "Pascal Sommer"]
+license = "MIT OR Apache-2.0"
+description = "A Vello backend for Plotters"
+repository = "https://github.com/alexmoon/plotters-xilem/tree/main/plotters-vello"
+keywords = ["visualization", "plotters", "vello", "plot"]
+categories = ["visualization"]
+readme = "README.md"
+
+# According to Plotters convention the major and minor version of all backends
+# should follow the plotters-backend version.
+# See https://docs.rs/plotters-backend/latest/plotters_backend/#compatibility-note
+version = "0.3.0"
+
+[dependencies]
+plotters-backend = { workspace = true }
+vello = { workspace = true }
+
+[dev-dependencies]
+plotters = { workspace = true }
+png = "0.17.16"
+tokio = { version = "1.45.0", features = ["rt", "macros", "sync"] }
+vello = { workspace = true, features = ["wgpu"] }

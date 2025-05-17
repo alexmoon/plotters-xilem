@@ -1,0 +1,18 @@
+[package]
+name = "plotters-xilem"
+version = "0.3.0"
+edition = "2024"
+authors = ["Alex Moon"]
+license = "MIT OR Apache-2.0"
+description = "Use Plotters as a Xilem View"
+repository = "https://github.com/alexmoon/plotters-xilem"
+keywords = ["visualization", "plotters", "xilem", "plot", "widget"]
+categories = ["visualization", "gui"]
+readme = "README.md"
+
+[dependencies]
+masonry = { workspace = true }
+plotters = { workspace = true }
+plotters-masonry = { workspace = true }
+xilem = { workspace = true }
+tracing = { version = "0.1.41", default-features = false }
