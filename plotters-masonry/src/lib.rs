@@ -10,7 +10,7 @@ You'll mainly need [`Plot::new`] from this crate.
 
 # Example
 
-For more complete examples see [the GitHub repo](https://github.com/Pascal-So/plotters-druid#examples)
+For more complete examples see [the GitHub repo](https://github.com/alexmoon/plotters-xilem)
 
 ```rust
 # use druid::{Widget, WindowDesc, AppLauncher};

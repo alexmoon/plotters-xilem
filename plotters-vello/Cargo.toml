@@ -19,7 +19,7 @@ plotters-backend = { workspace = true }
 vello = { workspace = true }
 
 [dev-dependencies]
-plotters = { workspace = true }
+plotters = { workspace = true, features = ["line_series"] }
 png = "0.17.16"
 tokio = { version = "1.45.0", features = ["rt", "macros", "sync"] }
 vello = { workspace = true, features = ["wgpu"] }
