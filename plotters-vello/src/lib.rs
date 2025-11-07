@@ -216,7 +216,14 @@ impl DrawingBackend for VelloBackend<'_> {
         src: &[u8],
     ) -> Result<(), DrawingErrorKind<Self::ErrorType>> {
         let data = src.to_vec();
-        let image = peniko::Image::new(data.into(), peniko::ImageFormat::Rgba8, iw, ih);
+        let image = peniko::ImageData {
+            data: data.into(),
+            format: peniko::ImageFormat::Rgba8,
+            alpha_type: peniko::ImageAlphaType::Alpha,
+            width: iw,
+            height: ih,
+        }
+        .into();
         let transform = kurbo::Affine::translate((pos.0 as f64, pos.1 as f64));
         self.scene.draw_image(&image, transform);
         Ok(())

@@ -1,12 +1,13 @@
-use masonry::theme;
+use masonry::properties::types::Length;
 use plotters::prelude::*;
 use plotters_xilem::plot;
+use xilem::style::Style;
 use xilem::view::{
     Axis, CrossAxisAlignment, FlexExt, FlexSpacer, Label, MainAxisAlignment, button, flex, label,
     sized_box,
 };
 use xilem::winit::error::EventLoopError;
-use xilem::{EventLoop, WidgetView, Xilem};
+use xilem::{EventLoop, WidgetView, WindowOptions, Xilem};
 
 fn build_plot_view(mu: &mut f64) -> impl WidgetView<f64> + use<> {
     plot(
@@ -71,40 +72,48 @@ fn big_button(
     label: impl Into<Label>,
     callback: impl Fn(&mut f64) + Send + Sync + 'static,
 ) -> impl WidgetView<f64> {
-    sized_box(button(label, callback)).width(40.).height(40.)
+    sized_box(button(label.into(), callback))
+        .width(Length::px(40.))
+        .height(Length::px(40.))
 }
 
 fn app_logic(mu: &mut f64) -> impl WidgetView<f64> + use<> {
-    sized_box(flex((
-        build_plot_view(mu).flex(1.),
-        FlexSpacer::Fixed(5.),
-        flex((
-            FlexSpacer::Fixed(30.0),
-            big_button("-", |mu| {
-                *mu = (*mu - 0.1).max(-3.);
-            }),
-            FlexSpacer::Flex(1.0),
-            label(format!("μ: {:.1}", mu)).text_size(32.).flex(5.0),
-            FlexSpacer::Flex(1.0),
-            big_button("+", |mu| {
-                *mu = (*mu + 0.1).min(3.);
-            }),
-            FlexSpacer::Fixed(30.0),
-        ))
-        .direction(Axis::Horizontal)
-        .cross_axis_alignment(CrossAxisAlignment::Center)
-        .main_axis_alignment(MainAxisAlignment::Center)
-        .must_fill_major_axis(true),
-    )))
+    sized_box(flex(
+        Axis::Vertical,
+        (
+            build_plot_view(mu).flex(1.),
+            FlexSpacer::Fixed(Length::px(5.)),
+            flex(
+                Axis::Horizontal,
+                (
+                    FlexSpacer::Fixed(Length::px(30.0)),
+                    big_button("-", |mu| {
+                        *mu = (*mu - 0.1).max(-3.);
+                    }),
+                    FlexSpacer::Flex(1.0),
+                    label(format!("μ: {mu:.1}")).text_size(32.).flex(5.0),
+                    FlexSpacer::Flex(1.0),
+                    big_button("+", |mu| {
+                        *mu = (*mu + 0.1).min(3.);
+                    }),
+                    FlexSpacer::Fixed(Length::px(30.0)),
+                ),
+            )
+            .cross_axis_alignment(CrossAxisAlignment::Center)
+            .main_axis_alignment(MainAxisAlignment::Center)
+            .must_fill_major_axis(true),
+        ),
+    ))
     .padding(10.)
 }
 
 fn main() -> Result<(), EventLoopError> {
-    let app = Xilem::new(0.8, app_logic).background_color(theme::BACKGROUND_DARK);
-    app.run_windowed(
-        EventLoop::with_user_event(),
-        "Logit-Normal Distribution".into(),
+    Xilem::new_simple(
+        0.8,
+        app_logic,
+        WindowOptions::new("Logit-Normal Distribution"),
     )
+    .run_in(EventLoop::with_user_event())
 }
 
 fn logit(p: f32) -> f32 {

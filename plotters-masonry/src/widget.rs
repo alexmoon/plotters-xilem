@@ -1,5 +1,5 @@
 use accesskit::{Node, Role};
-use masonry::core::{ArcStr, Widget, WidgetMut};
+use masonry::core::{ArcStr, NoAction, Widget, WidgetMut};
 use masonry::kurbo;
 use plotters::coord::Shift;
 use plotters::prelude::*;
@@ -72,6 +72,8 @@ impl<Data: 'static> Plot<Data> {
 }
 
 impl<Data: 'static> Widget for Plot<Data> {
+    type Action = NoAction;
+
     fn register_children(&mut self, _ctx: &mut masonry::core::RegisterCtx) {}
 
     fn layout(

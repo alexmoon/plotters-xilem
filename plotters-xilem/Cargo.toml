@@ -16,3 +16,6 @@ plotters = { workspace = true }
 plotters-masonry = { workspace = true }
 xilem = { workspace = true }
 tracing = { version = "0.1.41", default-features = false }
+
+[dev-dependencies]
+plotters = { workspace = true, features = ["line_series"] }

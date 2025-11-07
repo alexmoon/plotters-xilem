@@ -1,7 +1,7 @@
 use plotters::prelude::*;
 use plotters_xilem::plot;
 use xilem::winit::error::EventLoopError;
-use xilem::{EventLoop, WidgetView, Xilem};
+use xilem::{EventLoop, WidgetView, WindowOptions, Xilem};
 
 fn app_logic(_: &mut ()) -> impl WidgetView<()> + use<> {
     plot(
@@ -41,6 +41,6 @@ fn app_logic(_: &mut ()) -> impl WidgetView<()> + use<> {
 }
 
 fn main() -> Result<(), EventLoopError> {
-    let app = Xilem::new((), app_logic);
-    app.run_windowed(EventLoop::with_user_event(), "Hello Plot!".into())
+    Xilem::new_simple((), app_logic, WindowOptions::new("Hello Plot!"))
+        .run_in(EventLoop::with_user_event())
 }

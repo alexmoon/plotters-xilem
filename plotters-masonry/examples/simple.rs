@@ -1,6 +1,6 @@
-use masonry::core::{Action, WidgetId};
-use masonry::widgets::RootWidget;
-use masonry_winit::app::{AppDriver, DriverCtx};
+use masonry::core::{NewWidget, WidgetId};
+use masonry::theme::default_property_set;
+use masonry_winit::app::{AppDriver, DriverCtx, NewWindow};
 use plotters::prelude::*;
 use plotters_masonry::Plot;
 use winit::dpi::LogicalSize;
@@ -9,7 +9,14 @@ use winit::window::Window;
 struct Driver;
 
 impl AppDriver for Driver {
-    fn on_action(&mut self, _ctx: &mut DriverCtx<'_>, _widget_id: WidgetId, _action: Action) {}
+    fn on_action(
+        &mut self,
+        _window_id: masonry_winit::app::WindowId,
+        _ctx: &mut DriverCtx<'_, '_>,
+        _widget_id: WidgetId,
+        _action: masonry::core::ErasedAction,
+    ) {
+    }
 }
 
 fn main() {
@@ -54,11 +61,13 @@ fn main() {
         .with_resizable(true)
         .with_min_inner_size(window_size);
 
+    let new_window = NewWindow::new(window_attributes, NewWidget::new(plot).erased());
+
     masonry_winit::app::run(
         masonry_winit::app::EventLoop::with_user_event(),
-        window_attributes,
-        RootWidget::new(plot),
+        vec![new_window],
         Driver,
+        default_property_set(),
     )
     .unwrap();
 }

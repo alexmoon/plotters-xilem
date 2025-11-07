@@ -3,11 +3,11 @@ members = ["plotters-masonry", "plotters-vello", "plotters-xilem"]
 resolver = "3"
 
 [workspace.dependencies]
-masonry = "0.3.0"
-masonry_winit = "0.3.0"
+masonry = "0.4.0"
+masonry_winit = "0.4.0"
 plotters = { version = "^0.3", default-features = false }
 plotters-backend = "^0.3"
 plotters-masonry = { version = "0.3.0", path = "plotters-masonry" }
 plotters-vello = { version = "0.3.0", path = "plotters-vello" }
-vello = { version = "0.5.0", default-features = false }
-xilem = "0.3.0"
+vello = { version = "0.6.0", default-features = false }
+xilem = "0.4.0"

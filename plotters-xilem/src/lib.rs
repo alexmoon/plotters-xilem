@@ -46,8 +46,8 @@ impl<State, Data: Clone + PartialEq + 'static> View<State, (), ViewCtx> for Plot
     type Element = Pod<PlotWidget<Data>>;
     type ViewState = ();
 
-    fn build(&self, ctx: &mut ViewCtx) -> (Self::Element, Self::ViewState) {
-        let widget_pod = ctx.new_pod(PlotWidget::new(
+    fn build(&self, ctx: &mut ViewCtx, _app_state: &mut State) -> (Self::Element, Self::ViewState) {
+        let widget_pod = ctx.create_pod(PlotWidget::new(
             self.data.clone(),
             self.plot,
             self.alt_text.clone(),
@@ -61,6 +61,7 @@ impl<State, Data: Clone + PartialEq + 'static> View<State, (), ViewCtx> for Plot
         _view_state: &mut Self::ViewState,
         _ctx: &mut ViewCtx,
         mut element: xilem::core::Mut<'_, Self::Element>,
+        _app_state: &mut State,
     ) {
         if prev.data != self.data {
             PlotWidget::set_data(&mut element, self.data.clone());
@@ -82,13 +83,13 @@ impl<State, Data: Clone + PartialEq + 'static> View<State, (), ViewCtx> for Plot
     fn message(
         &self,
         _view_state: &mut Self::ViewState,
-        _id_path: &[xilem::core::ViewId],
-        message: xilem::core::DynMessage,
+        _message: &mut xilem::core::MessageContext,
+        _element: xilem::core::Mut<'_, Self::Element>,
         _app_state: &mut State,
-    ) -> xilem::core::MessageResult<(), xilem::core::DynMessage> {
+    ) -> xilem::core::MessageResult<()> {
         tracing::error!(
             "Message arrived in Plot::message, but Plot doesn't consume any messages, this is a bug"
         );
-        MessageResult::Stale(message)
+        MessageResult::Stale
     }
 }
